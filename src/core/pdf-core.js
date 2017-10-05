@@ -52,13 +52,17 @@ async function render(_opts = {}) {
       logger.info('Emulate @media screen..');
       await page.emulateMedia('screen');
     }
-   
+
     if (opts.cookies) {
       logger.info('Setting cookies');
-      await page.cookies(opts.cookies);
+      for (const [key, value] of Object.entries(opts.cookies)) {
+        await page.cookies({name: key, value: value});
+      }
     }
+   
     logger.info(`Goto url ${opts.url} ..`);
     await page.goto(opts.url, opts.goto);
+
 
     if (_.isNumber(opts.waitFor) || _.isString(opts.waitFor)) {
       logger.info(`Wait for ${opts.waitFor} ..`);
