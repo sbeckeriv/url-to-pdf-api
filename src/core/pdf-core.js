@@ -55,9 +55,7 @@ async function render(_opts = {}) {
    
     if (opts.cookies) {
       logger.info('Setting cookies');
-      await page.evaluate(() => {
-        document.cookie = opts.cookies;
-      });
+      await page.cookies(opts.cookies);
     }
     logger.info(`Goto url ${opts.url} ..`);
     await page.goto(opts.url, opts.goto);
